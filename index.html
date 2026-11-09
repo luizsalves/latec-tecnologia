@@ -41,14 +41,33 @@ a{color:#1F2978}a:hover{color:#10213F}
 @media (max-width:820px){.ring{aspect-ratio:auto;display:grid;grid-template-columns:minmax(0,1fr);gap:14px}.ring .petal,.ring .hex{position:static;width:auto;height:auto}.hex{order:-1;height:260px !important}}
 @media (max-width:760px){.h1{font-size:44px !important}.h2{font-size:30px !important}.hide-sm{display:none !important}.pad-lg{padding:28px 20px !important}}
 </style>
-<style>html{scroll-behavior:smooth}</style>
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:var(--hdr,84px)}
+/* Telas do sistema flutuando suavemente (usa "translate" para não conflitar com o transform da tela central) */
+@keyframes flutua{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.scr-c{animation:flutua 6s ease-in-out infinite}
+.scr-l{animation:flutua 7s ease-in-out -2s infinite}
+.scr-r{animation:flutua 7s ease-in-out -4.5s infinite}
+@media (prefers-reduced-motion:reduce){.scr-l,.scr-c,.scr-r{animation:none}}
+/* Botão flutuante do WhatsApp */
+.wa-float{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:40;width:60px;height:60px;border-radius:50%;background:#25D366;color:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px -8px rgba(16,33,63,0.45);transition:transform .2s ease,box-shadow .2s ease}
+.wa-float:hover{transform:scale(1.08);box-shadow:0 14px 32px -8px rgba(16,33,63,0.55);color:#FFFFFF}
+.wa-float:focus-visible{outline:3px solid #2457E6;outline-offset:3px}
+@media (max-width:760px){.wa-float{right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:54px;height:54px}}
+@media (max-width:760px){
+.hdr-in{padding:10px 16px !important;gap:6px !important}
+.hdr-nav{flex-wrap:nowrap !important;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.hdr-nav::-webkit-scrollbar{display:none}
+.hdr-nav .navlink{flex:none;padding:8px 10px !important}
+}
+</style>
 </head>
 <body>
-<div style="font-family: Manrope, system-ui, sans-serif; color: #10213F; background: #FFFFFF; width: 100%; overflow: hidden">
+<div style="font-family: Manrope, system-ui, sans-serif; color: #10213F; background: #FFFFFF; width: 100%; overflow: hidden; overflow: clip">
 
 <!-- ===== MENU ===== -->
-<header style="position: sticky; top: 0; z-index: 30; background: #FFFFFF; border-bottom: 1px solid #E6EBF4; box-shadow: 0 6px 24px -18px rgba(16,33,63,0.35)">
-<div style="max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<header id="topo-menu" style="position: sticky; top: 0; z-index: 30; background: #FFFFFF; border-bottom: 1px solid #E6EBF4; box-shadow: 0 6px 24px -18px rgba(16,33,63,0.35)">
+<div class="hdr-in" style="max-width: 1180px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
 <a href="#inicio" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #10213F">
 <svg width="42" height="32" viewBox="0 0 44 34" aria-hidden="true"><path d="M2 2h14l12 15-12 15H2l12-15z" fill="#F59A45"></path><path d="M16 2h14l12 15-12 15H16l12-15z" fill="#3EC6F2"></path></svg>
 <span style="display: flex; flex-direction: column; line-height: 1">
@@ -56,7 +75,7 @@ a{color:#1F2978}a:hover{color:#10213F}
 <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: #4A5D80; margin-top: 4px">TECNOLOGIA CONTÁBIL</span>
 </span>
 </a>
-<nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 14px; font-weight: 600">
+<nav class="hdr-nav" aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 14px; font-weight: 600">
 <a class="navlink" href="#inicio" style="text-decoration: none; color: #10213F; padding: 10px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Início</a>
 <a class="navlink" href="#pilares" style="text-decoration: none; color: #10213F; padding: 10px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Pilares</a>
 <a class="navlink" href="#agentes" style="text-decoration: none; color: #10213F; padding: 10px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Agentes</a>
@@ -64,7 +83,7 @@ a{color:#1F2978}a:hover{color:#10213F}
 <a class="navlink" href="#clientes" style="text-decoration: none; color: #10213F; padding: 10px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Clientes</a>
 <a class="navlink" href="#agendar" style="text-decoration: none; color: #10213F; padding: 10px 12px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Contato</a>
 </nav>
-<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<div class="hide-sm" style="display: flex; flex-wrap: wrap; gap: 10px">
 <a href="#agendar" style="text-decoration: none; background: #2457E6; color: #FFFFFF; font-weight: 700; font-size: 14px; padding: 12px 18px; border-radius: 10px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Falar com especialista</a>
 <a href="#solucoes" style="text-decoration: none; background: #FFFFFF; color: #10213F; font-weight: 700; font-size: 14px; padding: 12px 18px; border-radius: 10px; border: 1.5px solid #D5DDEB; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Ver soluções</a>
 </div>
@@ -141,7 +160,7 @@ a{color:#1F2978}a:hover{color:#10213F}
 <a class="mod" href="#solucoes" data-tab="dados" style="text-decoration: none; color: #FFFFFF; border-radius: 22px; padding: 28px; min-height: 230px; box-sizing: border-box; background: rgba(255,255,255,0.05); border: 1px solid rgba(139,221,248,0.28); display: flex; flex-direction: column; gap: 14px">
 <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g3a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C3A6FF"></stop><stop offset="100%" stop-color="#6A3FD8"></stop></linearGradient></defs><circle cx="32" cy="32" r="26" fill="url(#g3a)"></circle><circle cx="32" cy="32" r="26" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="2"></circle><path d="M14 40 C 20 34, 24 38, 30 30 S 42 22, 50 20" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"></path><circle cx="50" cy="20" r="4" fill="#F59A45"></circle><path d="M24 16 l1.6 4 4 1.6-4 1.6L24 27.2l-1.6-4-4-1.6 4-1.6z" fill="#FFFFFF" opacity="0.85"></path></svg>
 <span style="font-family: Sora, sans-serif; font-weight: 800; font-size: 22px">Dados e Inteligência Artificial</span>
-<span style="font-size: 14px; line-height: 1.55; color: #C6D2EA; flex: 1">Power BI sob medida, KPIs, rentabilidade e IA preditiva.</span>
+<span style="font-size: 14px; line-height: 1.55; color: #C6D2EA; flex: 1">Power BI sob medida, KPIs e IA preditiva.</span>
 <span style="font-size: 13px; font-weight: 700; color: #8BDDF8">Conhecer pilar ↗</span>
 </a>
 
@@ -463,6 +482,12 @@ a{color:#1F2978}a:hover{color:#10213F}
 </footer>
 
 </div>
+
+<!-- ===== BOTÃO FLUTUANTE WHATSAPP ===== -->
+<a class="wa-float" href="https://wa.me/5519999106426?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Latec%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." target="_blank" rel="noopener" aria-label="Falar com a Latec pelo WhatsApp: (19) 99910-6426" title="Fale conosco no WhatsApp">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
 <script>
 
 (function () {
@@ -494,7 +519,6 @@ a{color:#1F2978}a:hover{color:#10213F}
           mk('doc', 'Balancete contábil', 'Saldos e movimentos das contas a um clique, por período.', D),
           mk('doc', 'DRE', 'Receitas, custos e despesas organizados, com comparação entre períodos.', D),
           mk('doc', 'Conciliação bancária e Open Finance', 'Extratos em PDF, OFX ou via Open Finance, com correspondências e diferenças apontadas.', B),
-          mk('doc', 'Integração Financeiro × Contábil', 'Pagamentos, recebimentos e baixas refletidos na contabilidade sem redigitação.', B),
           mk('doc', 'Importação SPED Contábil (ECD)', 'Plano de contas, saldos e lançamentos importados e validados.', B),
           mk('doc', 'IRPJ/CSLL integrado à contabilidade', 'Cada provisão ligada à apuração de origem, com rastreabilidade.', B),
           mk('doc', 'Provisões de IRPJ e CSLL', 'Cálculo, registro, acompanhamento e ajustes, com memória de cálculo.', B),
@@ -502,9 +526,7 @@ a{color:#1F2978}a:hover{color:#10213F}
           mk('doc', 'Simples Nacional em lote', 'Várias empresas em uma rotina, com guias, recibos e exceções para revisão.', B),
           mk('doc', 'Monitoramento CND e e-CAC', 'Certidões, vencimentos e informações autorizadas, com avisos no momento certo.', B),
           mk('doc', 'Automação de XML e notas fiscais', 'Captura autorizada, organização, classificação e integração de documentos.', B),
-          mk('doc', 'Integração Fiscal × Contábil', 'Lançamentos fiscais na contabilidade, com vínculo de origem e validações.', B),
-          mk('doc', 'Gestão de documentos e obrigações', 'Guias, protocolos, prazos e comprovantes organizados por empresa.', B),
-          mk('doc', 'Portal do Cliente Contábil', 'Documentos, guias, relatórios e solicitações em um só lugar.', B)
+          mk('doc', 'Integração Fiscal × Contábil', 'Lançamentos fiscais na contabilidade, com vínculo de origem e validações.', B)
         ]
       },
       dados: {
@@ -517,10 +539,7 @@ a{color:#1F2978}a:hover{color:#10213F}
           mk('chart', 'Gestão de indicadores (KPIs)', 'Produtividade, atrasos, qualidade, receita, custos e resultados.', D),
           mk('chart', 'Dashboards gerenciais', 'A operação em painéis atualizados, sem relatórios manuais.', D),
           mk('chart', 'Assistente de IA gerencial', 'Perguntas em linguagem natural sobre os dados autorizados.', D),
-          mk('chart', 'Rentabilidade por cliente', 'Receita, horas dedicadas e margem por carteira.', B),
-          mk('chart', 'Gestão de prazos e SLAs', 'Obrigações, atividades e responsáveis, dentro e fora do prazo.', B),
           mk('chart', 'IA preditiva', 'Sinais de risco de atraso, excesso de demanda e mudanças relevantes.', B),
-          mk('chart', 'Custos e lucratividade', 'Despesas, receitas, margens e tendências para precificar melhor.', B),
           mk('chart', 'Alertas inteligentes', 'Avisos sobre desvios, atrasos e indicadores críticos.', B)
         ]
       },
@@ -661,6 +680,15 @@ a{color:#1F2978}a:hover{color:#10213F}
   document.getElementById('ag-name').addEventListener('input', updateConfirm);
   document.getElementById('ag-company').addEventListener('input', updateConfirm);
   renderAgenda();
+})();
+
+// Menu fixo: os links âncora param logo abaixo do menu, qualquer que seja a altura dele
+(function () {
+  var h = document.getElementById('topo-menu');
+  function sync() { document.documentElement.style.setProperty('--hdr', h.offsetHeight + 'px'); }
+  sync();
+  window.addEventListener('resize', sync);
+  window.addEventListener('load', sync);
 })();
 
 </script>
