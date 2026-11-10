@@ -8,6 +8,9 @@ set -e
 REPO=https://github.com/luizsalves/latec-tecnologia.git
 SITE=/var/www/latecsolucoes
 
+# A pasta pertence ao www-data; sem isso o git (rodando como root) recusa com "dubious ownership"
+git config --global --get-all safe.directory | grep -qx "$SITE" || git config --global --add safe.directory "$SITE"
+
 if [ -d "$SITE/.git" ]; then
   git -C "$SITE" pull --ff-only
 else
@@ -15,7 +18,9 @@ else
 fi
 chown -R www-data:www-data "$SITE"
 
-cp "$SITE/deploy/nginx-latecsolucoes.conf" /etc/nginx/sites-available/latecsolucoes
+# So copia na primeira instalacao: depois o certbot acrescenta o bloco HTTPS nesse arquivo
+# e sobrescreve-lo derruba o https do site.
+[ -f /etc/nginx/sites-available/latecsolucoes ] || cp "$SITE/deploy/nginx-latecsolucoes.conf" /etc/nginx/sites-available/latecsolucoes
 ln -sf /etc/nginx/sites-available/latecsolucoes /etc/nginx/sites-enabled/latecsolucoes
 nginx -t
 systemctl reload nginx
@@ -26,7 +31,6 @@ cat > /usr/local/bin/deploy-latecsolucoes <<'EOS'
 set -e
 git -C /var/www/latecsolucoes pull --ff-only
 chown -R www-data:www-data /var/www/latecsolucoes
-cp /var/www/latecsolucoes/deploy/nginx-latecsolucoes.conf /etc/nginx/sites-available/latecsolucoes
 nginx -t && systemctl reload nginx
 echo "latecsolucoes atualizado: $(git -C /var/www/latecsolucoes log -1 --oneline)"
 EOS
